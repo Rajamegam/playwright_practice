@@ -35,3 +35,12 @@ test("frames", async ({ page }) => {
 
 
 })
+test.only("handing visible and hidden elementsto check screenshot", async ({ page }) => {
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/")
+    expect(await page.locator("#displayed-text")).toBeVisible()
+    await page.screenshot({path:'screenshot.png'})
+    await page.locator("#hide-textbox").click()
+    expect(await page.locator("#displayed-text")).toBeHidden()
+
+
+})

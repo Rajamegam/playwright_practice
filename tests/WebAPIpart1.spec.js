@@ -1,22 +1,20 @@
 const { test, request, expect } = require('@playwright/test')
-const { APiUtils } = require('../utils/APiUtils');
+const {ApiUtils} = require('../Utils/ApiUtils');
 const login_payload = { userEmail: "rajamegam1611@gmail.com", userPassword: "Test@123" }
 const order_payload = { orders: [{ country: "Cuba", productOrderedId: "676a631fe2b5443b1f004a20" }] }
-let token_value
-let orderID_Detail
 let response
 
-test.beforeAll(async ({ request }) => {
-    const apiUtils = new APiUtils(request, login_payload);
-    response = await apiUtils.createOrder(order_payLoad);
 
-});
+test.beforeAll(async ({ request }) => {
+    const apiUtils = new ApiUtils(request, login_payload)
+    response = await apiUtils.createOrder(order_payload)
+
+})
 
 test("endtoend", async ({ page }) => {
-
     page.addInitScript(token => {
-        window.localStorage.setItem('token', response.token);
-    }, token_value);
+        window.localStorage.setItem('token', token);
+    }, response.token);
 
     const product_name = "Banarsi Saree";
     await page.goto("https://rahulshettyacademy.com/client");

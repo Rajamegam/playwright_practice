@@ -2,9 +2,10 @@ const { test } = require('@playwright/test')
 const { expect } = require('@playwright/test');
 const exp = require('constants');
 
-test("Context based browser open", async ({ browser }) => {
+test.only("Context based browser open", async ({ browser }) => {
     const context = await browser.newContext();
     const page = await context.newPage()
+    page.route('**/*.css',route=>route.abort())
     //const cardtitle = "page.locator('h4 a')"
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/")
     await page.locator("#username").fill("rahulshettyacademy")
