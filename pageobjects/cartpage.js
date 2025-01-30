@@ -7,7 +7,7 @@ class cartpage {
 
     }
     async checkout() {
-        const bool = this.cartproducttext.isVisible();
+        const bool = await this.cartproducttext.isVisible();
         this.expect(bool).toBeTruthy();
         await this.checkoutbutton.click();
     }

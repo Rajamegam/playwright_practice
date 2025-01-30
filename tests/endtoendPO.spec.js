@@ -1,5 +1,7 @@
 const { test, expect } = require('@playwright/test');
-const { POManager } = require('../pageobjects/POManager')
+// const { POManager } = require('../pageobjects/POManager')
+const {POManager}=require('../pageobjects/POManager');
+const exp = require('constants');
 const dataset=JSON.parse(JSON.stringify(require('../Utils/testdata.json')))
 
 
@@ -13,19 +15,21 @@ test("endtoend", async ({ page }) => {
     const month = "31"
     const cvv = "334"
     const name = "rajamegam"
-    const promtionalcode = "rahulshetty"
-    POManager.login
+    const promtionalcode = "rahulshettyacademy"
+
+    const po=new POManager(page,expect)
+    const loginPage=po.getLoginPage()
     await loginPage.goto()
     await loginPage.validLogin(dataset.username, dataset.password)
 
-    const dashboardpage = POManager.getdashboardPage()
+    const dashboardpage = po.getdashboardPage()
     await dashboardpage.productSearch(dataset.product) 
     await dashboardpage.navigateToCart()
 
-    const cart = POManager.getcartpage()
+    const cart = po.getcartpage()
     await cart.checkout()
 
-    const paymentPage = POManager.getpaymentpage()
+    const paymentPage = po.getpaymentpage()
     await paymentPage.enterCreditCardDetails(creditcardnumber, date, month, cvv, name, promtionalcode)
     await paymentPage.selectCountry(email)
     await paymentPage.placeorder()
